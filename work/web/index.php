@@ -1,7 +1,11 @@
 <?php 
+require ('../app/functions.php');
 $today = date('Y-m-d H:i:s l');
-// javascriptで悪さされる
-$name = "Alan <script>alert(1)</script>";
+$names = [
+  "Alan",
+  "Tim",
+  "Max"
+];
 ?>
 
 <!DOCTYPE html>
@@ -11,8 +15,15 @@ $name = "Alan <script>alert(1)</script>";
   <title>PHP Practice</title>
 </head>
 <body>
-  <!-- ENT_QUOTESは"""も変換してねという意味 -->
-  <p>Hello, <?= htmlspecialcharacters($name, ENT_QUOTES, 'UTF-8'); ?>!</p>
-  <p>Today: <?= $today; ?></p>
+<ul>
+  <?php if(empty($names)){ ?>
+    <li>Nobody!</li>
+  <?php } else {?>
+    <?php 
+      foreach ($names as $name){?>
+        <li><?= h($name) ?></li>
+    <?php } ?>
+  <?php }?>
+</ul>
 </body>
 </html>
